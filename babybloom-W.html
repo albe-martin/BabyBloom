@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Bloom</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e2ff7f 0%, #c9f76f 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            min-height: 75vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+
+        .btn-primary {
+            background-color: #e2ff7f;
+            color: #000;
+        }
+
+        .btn-secondary {
+            background-color: #000;
+            color: #e2ff7f;
+        }
+
+        .btn-primary:hover {
+            background-color: #d1f269;
+        }
+
+        .btn-secondary:hover {
+            background-color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .link-text {
+            color: #666;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        /* Taskbar styles */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #e2ff7f;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 100;
+        }
+
+        .taskbar-icon {
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .taskbar-icon.active {
+            color: #000;
+            transform: scale(1.2);
+        }
+
+        .plus-icon {
+            background-color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Reminder/Task styles */
+        .reminder {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+        }
+
+        .reminder-info {
+            flex-grow: 1;
+        }
+
+        .reminder-time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .reminder-title {
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .reminder-note {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .reminder-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .circle-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #e2ff7f;
+            margin-left: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .circle-check.completed {
+            background-color: #e2ff7f;
+        }
+
+        .edit-btn {
+            font-size: 12px;
+            color: #888;
+            margin-right: 10px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Activity creation styles */
+        .activity-icons {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .activity-icon.active {
+            background-color: #e2ff7f;
+            transform: scale(1.1);
+        }
+
+        .datetime-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .datetime-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 2px;
+        }
+
+        .datetime-value {
+            margin: 0 5px;
+        }
+
+        .datetime-arrow {
+            cursor: pointer;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .reminder-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+            flex-grow: 1;
+        }
+
+        .tracker-timeline {
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background-color: #e2ff7f;
+        }
+
+        .baby-element {
+            font-size: 28px;
+            margin: 10px;
+            opacity: 0.7;
+            position: absolute;
+        }
+
+        .baby-element:nth-child(1) {
+            top: 10%;
+            right: 15%;
+            transform: rotate(15deg);
+        }
+
+        .baby-element:nth-child(2) {
+            bottom: 20%;
+            left: 10%;
+            transform: rotate(-10deg);
+        }
+
+        .baby-element:nth-child(3) {
+            top: 30%;
+            left: 20%;
+            transform: rotate(5deg);
+        }
+
+        /* Analytics styles */
+        .analytics-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .pie-chart-container {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            background: conic-gradient(
+                #FFB6C1 0% 50%, /* Sleep - pink */
+                #ADD8E6 50% 75%, /* Feeding - light blue */
+                #90EE90 75% 100% /* Diaper - light green */
+            );
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border-radius: 3px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            width: 48%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Baby decorative elements using CSS */
+        .rattle {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(226, 255, 127, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+
+        .rattle::before {
+            content: "🎯";
+            opacity: 0.8;
+        }
+
+        .bottle {
+            position: absolute;
+            width: 20px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 5px 5px 10px 10px;
+            border: 2px solid rgba(226, 255, 127, 0.8);
+        }
+
+        .bottle::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            background-color: rgba(226, 255, 127, 0.8);
+            border-radius: 50%;
+        }
+
+        .foot-print {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(226, 255, 127, 0.7);
+            transform: rotate(45deg);
+        }
+
+        .foot-print::after {
+            content: "👣";
+        }
+    </style>
+</head>
+<body>
+    <!-- Baby-themed decorative elements -->
+    <div class="rattle" style="top: 10%; right: 10%;"></div>
+    <div class="bottle" style="bottom: 15%; left: 8%;"></div>
+    <div class="foot-print" style="top: 20%; left: 15%;"></div>
+    <div class="foot-print" style="bottom: 25%; right: 12%;"></div>
+
+    <div class="container">
+        <!-- Start Screen -->
+        <div class="screen active" id="startScreen">
+            <h1>Baby Bloom</h1>
+            <p>Track everything about your baby all in one place</p>
+            <button class="btn btn-primary" onclick="showScreen('createProfileScreen')">Get Started</button>
+        </div>
+
+        <!-- Create Profile Screen -->
+        <div class="screen" id="createProfileScreen">
+            <h2>Create Profile</h2>
+            <button class="btn btn-secondary" onclick="showScreen('signUpScreen')">Create new family</button>
+            <button class="btn btn-secondary" onclick="showScreen('joinCodeScreen')">Join as family</button>
+            <button class="btn btn-secondary" onclick="showScreen('joinCodeScreen')">Join as baby sitter</button>
+            <button class="btn btn-secondary" onclick="showScreen('joinCodeScreen')">Continue as guest</button>
+            <span class="link-text" onclick="showScreen('loginScreen')">Log in</span>
+        </div>
+
+        <!-- Sign Up Screen -->
+        <div class="screen" id="signUpScreen">
+            <div class="back-arrow" onclick="showScreen('createProfileScreen')">←</div>
+            <h2>Sign Up</h2>
+            <input type="text" id="signupUsername" placeholder="Username">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <input type="password" id="confirmPassword" placeholder="Confirm password">
+            <button class="btn btn-secondary" id="signupButton" onclick="checkSignupFields()">Sign Up</button>
+            <span class="link-text" onclick="showScreen('loginScreen')">Log in</span>
+        </div>
+
+        <!-- Baby Info Screen -->
+        <div class="screen" id="babyScreen">
+            <div class="back-arrow" onclick="showScreen('signUpScreen')">←</div>
+            <h2>Baby</h2>
+            <div style="font-size: 48px; margin: 10px 0;">👶</div>
+            <input type="text" id="babyName" placeholder="Baby name">
+            <input type="text" id="babyDOB" placeholder="DOB dd/mm/yyyy">
+            <input type="text" id="babyHeight" placeholder="Height">
+            <input type="text" id="babyWeight" placeholder="Weight">
+            <input type="text" id="babyGender" placeholder="Gender">
+            <button class="btn btn-secondary" id="startButton" onclick="checkBabyFields()">Start</button>
+        </div>
+
+        <!-- Join Code Screen -->
+        <div class="screen" id="joinCodeScreen">
+            <div class="back-arrow" onclick="showScreen('createProfileScreen')">←</div>
+            <h1>Baby Bloom</h1>
+            <input type="text" id="joinCode" placeholder="Enter Join Code">
+            <button class="btn btn-secondary" id="joinButton" onclick="checkJoinCode()">Join</button>
+        </div>
+
+        <!-- Login Screen -->
+        <div class="screen" id="loginScreen">
+            <h2>Log In</h2>
+            <input type="text" id="loginUsername" placeholder="Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button class="btn btn-secondary" id="loginButton" onclick="checkLoginFields()">Log In</button>
+            <div>
+                <span class="link-text" onclick="showScreen('createProfileScreen')">Forgot password</span>
+                <span style="margin: 0 10px;">|</span>
+                <span class="link-text" onclick="showScreen('signUpScreen')">Sign up</span>
+            </div>
+        </div>
+
+        <!-- Home Screen -->
+        <div class="screen" id="homeScreen">
+            <div class="content-area">
+                <div>
+                    <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+                        <div style="display: flex; align-items: center; cursor: pointer;" onclick="showScreen('tipsScreen')">
+                            <span style="font-size: 20px; margin-right: 5px;">👶</span>
+                            <span>Tips</span>
+                        </div>
+                    </div>
+                    <h2>Upcoming</h2>
+                    <div class="reminder-list" id="homeReminderList">
+                        <!-- Reminders will be dynamically added here -->
+                    </div>
+                    <p id="moreRemindersText" class="hidden">More reminders pending</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracker Screen -->
+        <div class="screen" id="trackerScreen">
+            <h2>Tracker</h2>
+            <div class="reminder-list tracker-timeline" id="trackerReminderList">
+                <div class="timeline-line"></div>
+                <!-- Reminders will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Create Activity Screen -->
+        <div class="screen" id="createActivityScreen">
+            <div class="back-arrow" onclick="showScreen('homeScreen')">←</div>
+            <h2>Create Activity</h2>
+            <div class="activity-icons">
+                <div class="activity-icon" data-type="diaper" onclick="selectActivityType(this)">🧷</div>
+                <div class="activity-icon" data-type="feeding" onclick="selectActivityType(this)">🍼</div>
+                <div class="activity-icon" data-type="play" onclick="selectActivityType(this)">🪀</div>
+                <div class="activity-icon" data-type="sleep" onclick="selectActivityType(this)">💤</div>
+            </div>
+            <div class="datetime-selector">
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementDateTime('day')">▲</div>
+                    <span class="datetime-value" id="day">01</span>
+                    <div class="datetime-arrow" onclick="decrementDateTime('day')">▼</div>
+                </div>
+                <span>/</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementDateTime('month')">▲</div>
+                    <span class="datetime-value" id="month">01</span>
+                    <div class="datetime-arrow" onclick="decrementDateTime('month')">▼</div>
+                </div>
+                <span>/</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementDateTime('year')">▲</div>
+                    <span class="datetime-value" id="year">2025</span>
+                    <div class="datetime-arrow" onclick="decrementDateTime('year')">▼</div>
+                </div>
+                <span>|</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementDateTime('hour')">▲</div>
+                    <span class="datetime-value" id="hour">12</span>
+                    <div class="datetime-arrow" onclick="decrementDateTime('hour')">▼</div>
+                </div>
+                <span>:</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementDateTime('minute')">▲</div>
+                    <span class="datetime-value" id="minute">00</span>
+                    <div class="datetime-arrow" onclick="decrementDateTime('minute')">▼</div>
+                </div>
+                <div class="datetime-unit" style="margin-left: 5px;">
+                    <div class="datetime-arrow" onclick="toggleAmPm()">▲</div>
+                    <span class="datetime-value" id="ampm">am</span>
+                    <div class="datetime-arrow" onclick="toggleAmPm()">▼</div>
+                </div>
+            </div>
+            <textarea id="activityNote" placeholder="Add note"></textarea>
+            <div style="display: flex; align-items: center; margin: 15px 0;">
+                <span style="margin-right: 10px;">Set Reminder</span>
+                <div style="width: 40px; height: 20px; background-color: #ddd; border-radius: 10px; position: relative; cursor: pointer;" onclick="toggleReminder()">
+                    <div id="reminderToggle" style="width: 18px; height: 18px; background-color: white; border-radius: 50%; position: absolute; top: 1px; left: 1px; transition: all 0.3s ease;"></div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="createActivity()">Create Activity</button>
+        </div>
+
+        <!-- Edit Activity Screen -->
+        <div class="screen" id="editActivityScreen">
+            <div class="back-arrow" onclick="cancelEdit()">←</div>
+            <h2>Edit Activity</h2>
+            <div class="activity-icons">
+                <div class="activity-icon" data-type="diaper" onclick="selectEditActivityType(this)">🧷</div>
+                <div class="activity-icon" data-type="feeding" onclick="selectEditActivityType(this)">🍼</div>
+                <div class="activity-icon" data-type="play" onclick="selectEditActivityType(this)">🪀</div>
+                <div class="activity-icon" data-type="sleep" onclick="selectEditActivityType(this)">💤</div>
+            </div>
+            <div class="datetime-selector">
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementEditDateTime('day')">▲</div>
+                    <span class="datetime-value" id="editDay">01</span>
+                    <div class="datetime-arrow" onclick="decrementEditDateTime('day')">▼</div>
+                </div>
+                <span>/</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementEditDateTime('month')">▲</div>
+                    <span class="datetime-value" id="editMonth">01</span>
+                    <div class="datetime-arrow" onclick="decrementEditDateTime('month')">▼</div>
+                </div>
+                <span>/</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementEditDateTime('year')">▲</div>
+                    <span class="datetime-value" id="editYear">2025</span>
+                    <div class="datetime-arrow" onclick="decrementEditDateTime('year')">▼</div>
+                </div>
+                <span>|</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementEditDateTime('hour')">▲</div>
+                    <span class="datetime-value" id="editHour">12</span>
+                    <div class="datetime-arrow" onclick="decrementEditDateTime('hour')">▼</div>
+                </div>
+                <span>:</span>
+                <div class="datetime-unit">
+                    <div class="datetime-arrow" onclick="incrementEditDateTime('minute')">▲</div>
+                    <span class="datetime-value" id="editMinute">00</span>
+                    <div class="datetime-arrow" onclick="decrementEditDateTime('minute')">▼</div>
+                </div>
+                <div class="datetime-unit" style="margin-left: 5px;">
+                    <div class="datetime-arrow" onclick="toggleEditAmPm()">▲</div>
+                    <span class="datetime-value" id="editAmpm">am</span>
+                    <div class="datetime-arrow" onclick="toggleEditAmPm()">▼</div>
+                </div>
+            </div>
+            <textarea id="editActivityNote" placeholder="Add note"></textarea>
+            <div style="display: flex; align-items: center; margin: 15px 0;">
+                <span style="margin-right: 10px;">Set Reminder</span>
+                <div style="width: 40px; height: 20px; background-color: #ddd; border-radius: 10px; position: relative; cursor: pointer;" onclick="toggleEditReminder()">
+                    <div id="editReminderToggle" style="width: 18px; height: 18px; background-color: white; border-radius: 50%; position: absolute; top: 1px; left: 1px; transition: all 0.3s ease;"></div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="updateActivity()">Update Activity</button>
+        </div>
+
+        <!-- Analytics Screen -->
+        <div class="screen" id="analyticsScreen">
+            <h2>Analytics</h2>
+            <div class="analytics-container">
+                <div class="pie-chart-container"></div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FFB6C1;"></div>
+                        <span>Hours slept</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #ADD8E6;"></div>
+                        <span># of feedings</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #90EE90;"></div>
+                        <span># of diaper changes</span>
+                    </div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-value">14 h</div>
+                        <div class="stat-label">Average hours of sleep</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Average diaper changes</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 20px;">Print Report</button>
+            </div>
+        </div>
+
+        <!-- Personal Info Screen -->
+        <div class="screen" id="personalInfoScreen">
+            <h2>Personal Information</h2>
+            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <p>Your personal information will appear here.</p>
+            </div>
+        </div>
+
+        <!-- Tips Screen -->
+        <div class="screen" id="tipsScreen">
+            <div class="back-arrow" onclick="showScreen('homeScreen')">←</div>
+            <h2>Baby Tips</h2>
+            <div class="reminder-list">
+                <div class="reminder">
+                    <div class="reminder-info">
+                        <div class="reminder-title">Sleep Schedule</div>
+                        <div class="reminder-note">Newborns sleep 14-17 hours a day in short periods of 2-4 hours.</div>
+                    </div>
+                </div>
+                <div class="reminder">
+                    <div class="reminder-info">
+                        <div class="reminder-title">Feeding</div>
+                        <div class="reminder-note">Newborns typically eat every 2-3 hours, or 8-12 times in 24 hours.</div>
+                    </div>
+                </div>
+                <div class="reminder">
+                    <div class="reminder-info">
+                        <div class="reminder-title">Diaper Changes</div>
+                        <div class="reminder-note">Expect 6-8 wet diapers and 2-5 bowel movements per day for newborns.</div>
+                    </div>
+                </div>
+                <div class="reminder">
+                    <div class="reminder-info">
+                        <div class="reminder-title">Bath Time</div>
+                        <div class="reminder-note">Until the umbilical cord falls off, give sponge baths only. After that, 2-3 baths per week is plenty.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taskbar (visible on screens that need it) -->
+    <div class="taskbar" id="mainTaskbar" style="display: none;">
+        <div class="taskbar-icon" id="homeIcon" onclick="showScreen('homeScreen')">🏠</div>
+        <div class="taskbar-icon" id="trackerIcon" onclick="showScreen('trackerScreen')">📋</div>
+        <div class="taskbar-icon plus-icon" id="addIcon" onclick="showScreen('createActivityScreen')">+</div>
+        <div class="taskbar-icon" id="analyticsIcon" onclick="showScreen('analyticsScreen')">📊</div>
+        <div class="taskbar-icon" id="profileIcon" onclick="showScreen('personalInfoScreen')">👤</div>
+    </div>
+
+    <script>
+        // Store activities/reminders
+        let activities = [];
+        let currentActivityType = null;
+        let reminderEnabled = false;
+        let editingActivityId = null;
+        let previousScreen = null;
+
+        // Initialize date and time values
+        const today = new Date();
+        document.getElementById('day').textContent = String(today.getDate()).padStart(2, '0');
+        document.getElementById('month').textContent = String(today.getMonth() + 1).padStart(2, '0');
+        document.getElementById('year').textContent = today.getFullYear();
+        document.getElementById('hour').textContent = String(today.getHours() % 12 || 12).padStart(2, '0');
+        document.getElementById('minute').textContent = String(today.getMinutes()).padStart(2, '0');
+        document.getElementById('ampm').textContent = today.getHours() >= 12 ? 'pm' : 'am';
+
+        // Function to switch between screens
+        function showScreen(screenId) {
+            // Store previous screen for back functionality
+            const currentScreen = document.querySelector('.screen.active');
+            if (currentScreen) {
+                previousScreen = currentScreen.id;
+            }
+            
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+            
+            // Show/hide taskbar
+            // Show/hide taskbar based on screen
+            const taskbarScreens = ['homeScreen', 'trackerScreen', 'analyticsScreen', 'personalInfoScreen', 'createActivityScreen', 'editActivityScreen'];
+            if (taskbarScreens.includes(screenId)) {
+                document.getElementById('mainTaskbar').style.display = 'flex';
+                
+                // Highlight active icon
+                document.querySelectorAll('.taskbar-icon').forEach(icon => {
+                    icon.classList.remove('active');
+                });
+                
+                if (screenId === 'homeScreen') {
+                    document.getElementById('homeIcon').classList.add('active');
+                } else if (screenId === 'trackerScreen') {
+                    document.getElementById('trackerIcon').classList.add('active');
+                } else if (screenId === 'createActivityScreen' || screenId === 'editActivityScreen') {
+                    document.getElementById('addIcon').classList.add('active');
+                } else if (screenId === 'analyticsScreen') {
+                    document.getElementById('analyticsIcon').classList.add('active');
+                } else if (screenId === 'personalInfoScreen') {
+                    document.getElementById('profileIcon').classList.add('active');
+                }
+            } else {
+                document.getElementById('mainTaskbar').style.display = 'none';
+            }
+            
+            // If we're showing the home or tracker screen, refresh the reminders
+            if (screenId === 'homeScreen' || screenId === 'trackerScreen') {
+                renderReminders();
+            }
+        }
+
+        // Validation functions for forms
+        function checkSignupFields() {
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (username && password && confirmPassword) {
+                showScreen('babyScreen');
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function checkBabyFields() {
+            const name = document.getElementById('babyName').value;
+            const dob = document.getElementById('babyDOB').value;
+            const height = document.getElementById('babyHeight').value;
+            const weight = document.getElementById('babyWeight').value;
+            const gender = document.getElementById('babyGender').value;
+            
+            if (name && dob && height && weight && gender) {
+                showScreen('homeScreen');
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function checkJoinCode() {
+            const joinCode = document.getElementById('joinCode').value;
+            
+            if (joinCode) {
+                showScreen('homeScreen');
+            } else {
+                alert('Please enter a join code');
+            }
+        }
+
+        function checkLoginFields() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (username && password) {
+                showScreen('homeScreen');
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        // Activity creation functions
+        function selectActivityType(element) {
+            // Remove active class from all icons
+            document.querySelectorAll('.activity-icon').forEach(icon => {
+                icon.classList.remove('active');
+            });
+            
+            // Add active class to selected icon
+            element.classList.add('active');
+            
+            // Store selected activity type
+            currentActivityType = element.getAttribute('data-type');
+        }
+
+        function incrementDateTime(unit) {
+            const element = document.getElementById(unit);
+            let value = parseInt(element.textContent);
+            
+            switch(unit) {
+                case 'day':
+                    value = value < 31 ? value + 1 : 1;
+                    break;
+                case 'month':
+                    value = value < 12 ? value + 1 : 1;
+                    break;
+                case 'year':
+                    value = value + 1;
+                    break;
+                case 'hour':
+                    value = value < 12 ? value + 1 : 1;
+                    break;
+                case 'minute':
+                    value = value < 59 ? value + 1 : 0;
+                    break;
+            }
+            
+            element.textContent = String(value).padStart(2, '0');
+        }
+
+        function decrementDateTime(unit) {
+            const element = document.getElementById(unit);
+            let value = parseInt(element.textContent);
+            
+            switch(unit) {
+                case 'day':
+                    value = value > 1 ? value - 1 : 31;
+                    break;
+                case 'month':
+                    value = value > 1 ? value - 1 : 12;
+                    break;
+                case 'year':
+                    value = value - 1;
+                    break;
+                case 'hour':
+                    value = value > 1 ? value - 1 : 12;
+                    break;
+                case 'minute':
+                    value = value > 0 ? value - 1 : 59;
+                    break;
+            }
+            
+            element.textContent = String(value).padStart(2, '0');
+        }
+
+        function toggleAmPm() {
+            const element = document.getElementById('ampm');
+            element.textContent = element.textContent === 'am' ? 'pm' : 'am';
+        }
+
+        function toggleReminder() {
+            reminderEnabled = !reminderEnabled;
+            const toggle = document.getElementById('reminderToggle');
+            
+            if (reminderEnabled) {
+                toggle.style.left = '21px';
+                toggle.parentElement.style.backgroundColor = '#e2ff7f';
+            } else {
+                toggle.style.left = '1px';
+                toggle.parentElement.style.backgroundColor = '#ddd';
+            }
+        }
+
+        function createActivity() {
+            if (!currentActivityType) {
+                alert('Please select an activity type');
+                return;
+            }
+            
+            // Get date and time values
+            const day = document.getElementById('day').textContent;
+            const month = document.getElementById('month').textContent;
+            const year = document.getElementById('year').textContent;
+            const hour = document.getElementById('hour').textContent;
+            const minute = document.getElementById('minute').textContent;
+            const ampm = document.getElementById('ampm').textContent;
+            
+            // Get note
+            const note = document.getElementById('activityNote').value;
+            
+            // Create new activity object
+            const newActivity = {
+                id: Date.now(), // Use timestamp as unique ID
+                type: currentActivityType,
+                day: day,
+                month: month,
+                year: year,
+                hour: hour,
+                minute: minute,
+                ampm: ampm,
+                note: note,
+                reminder: reminderEnabled,
+                completed: false,
+                timestamp: new Date(`${month}/${day}/${year} ${hour}:${minute} ${ampm}`).getTime()
+            };
+            
+            // Add to activities array
+            activities.push(newActivity);
+            
+            // Sort activities by timestamp (newest first)
+            activities.sort((a, b) => b.timestamp - a.timestamp);
+            
+            // Reset form and return to home screen
+            resetActivityForm();
+            showScreen('homeScreen');
+        }
+
+        // Reset activity form
+        function resetActivityForm() {
+            // Reset activity type
+            document.querySelectorAll('.activity-icon').forEach(icon => {
+                icon.classList.remove('active');
+            });
+            currentActivityType = null;
+            
+            // Reset note
+            document.getElementById('activityNote').value = '';
+            
+            // Reset reminder toggle
+            reminderEnabled = false;
+            const toggle = document.getElementById('reminderToggle');
+            toggle.style.left = '1px';
+            toggle.parentElement.style.backgroundColor = '#ddd';
+            
+            // Reset date and time to current
+            const today = new Date();
+            document.getElementById('day').textContent = String(today.getDate()).padStart(2, '0');
+            document.getElementById('month').textContent = String(today.getMonth() + 1).padStart(2, '0');
+            document.getElementById('year').textContent = today.getFullYear();
+            document.getElementById('hour').textContent = String(today.getHours() % 12 || 12).padStart(2, '0');
+            document.getElementById('minute').textContent = String(today.getMinutes()).padStart(2, '0');
+            document.getElementById('ampm').textContent = today.getHours() >= 12 ? 'pm' : 'am';
+        }
+
+        // Render reminders on home and tracker screens
+        function renderReminders() {
+            const homeReminderList = document.getElementById('homeReminderList');
+            const trackerReminderList = document.getElementById('trackerReminderList');
+            const moreRemindersText = document.getElementById('moreRemindersText');
+            
+            // Clear existing reminders
+            homeReminderList.innerHTML = '';
+            trackerReminderList.innerHTML = '<div class="timeline-line"></div>';
+            
+            // Check if we have any activities
+            if (activities.length === 0) {
+                homeReminderList.innerHTML = '<p>No activities yet. Click the + button to add one!</p>';
+                trackerReminderList.innerHTML = '<div class="timeline-line"></div><p>No activities yet. Click the + button to add one!</p>';
+                moreRemindersText.classList.add('hidden');
+                return;
+            }
+            
+            // Sort activities by timestamp (newest first)
+            const sortedActivities = [...activities].sort((a, b) => b.timestamp - a.timestamp);
+            
+            // Create home screen reminders (limit to 3)
+            const homeActivities = sortedActivities.slice(0, 3);
+            homeActivities.forEach(activity => {
+                homeReminderList.appendChild(createReminderElement(activity));
+            });
+            
+            // Show "more reminders" text if needed
+            if (sortedActivities.length > 3) {
+                moreRemindersText.classList.remove('hidden');
+            } else {
+                moreRemindersText.classList.add('hidden');
+            }
+            
+            // Create tracker screen reminders (show all)
+            sortedActivities.forEach(activity => {
+                trackerReminderList.appendChild(createReminderElement(activity));
+            });
+        }
+
+        // Create a reminder element for a given activity
+        function createReminderElement(activity) {
+            const reminderEl = document.createElement('div');
+            reminderEl.className = 'reminder';
+            
+            // Map activity types to emojis
+            const typeEmojis = {
+                diaper: '🧷',
+                feeding: '🍼',
+                play: '🪀',
+                sleep: '💤'
+            };
+            
+            reminderEl.innerHTML = `
+                <div class="reminder-info">
+                    <div class="reminder-time">${activity.month}/${activity.day}/${activity.year} ${activity.hour}:${activity.minute} ${activity.ampm}</div>
+                    <div class="reminder-title">${typeEmojis[activity.type]} ${activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}</div>
+                    <div class="reminder-note">${activity.note}</div>
+                </div>
+                <div class="reminder-actions">
+                    <span class="edit-btn" onclick="editActivity(${activity.id})">Edit</span>
+                    <div class="circle-check ${activity.completed ? 'completed' : ''}" data-id="${activity.id}" onclick="toggleCompleted(${activity.id})">
+                        ${activity.completed ? 'X' : ''}
+                    </div>
+                </div>
+            `;
+            
+            return reminderEl;
+        }
+
+        // Toggle completed status
+        function toggleCompleted(activityId) {
+            const activityIndex = activities.findIndex(a => a.id === activityId);
+            
+            if (activityIndex !== -1) {
+                const activity = activities[activityIndex];
+                activity.completed = !activity.completed;
+                
+                // If completed, set X mark, otherwise remove it
+                if (activity.completed) {
+                    // If completed, after a delay, remove the activity
+                    setTimeout(() => {
+                        activities = activities.filter(a => a.id !== activityId);
+                        renderReminders();
+                    }, 1000);
+                }
+                
+                renderReminders();
+            }
+        }
+
+        // Edit activity
+        function editActivity(activityId) {
+            const activity = activities.find(a => a.id === activityId);
+            
+            if (!activity) return;
+            
+            // Set editing activity ID
+            editingActivityId = activityId;
+            
+            // Populate edit form with activity data
+            document.querySelectorAll('#editActivityScreen .activity-icon').forEach(icon => {
+                if (icon.getAttribute('data-type') === activity.type) {
+                    icon.classList.add('active');
+                } else {
+                    icon.classList.remove('active');
+                }
+            });
+            
+            document.getElementById('editDay').textContent = activity.day;
+            document.getElementById('editMonth').textContent = activity.month;
+            document.getElementById('editYear').textContent = activity.year;
+            document.getElementById('editHour').textContent = activity.hour;
+            document.getElementById('editMinute').textContent = activity.minute;
+            document.getElementById('editAmpm').textContent = activity.ampm;
+            document.getElementById('editActivityNote').value = activity.note;
+            
+            // Set reminder toggle
+            const toggle = document.getElementById('editReminderToggle');
+            if (activity.reminder) {
+                toggle.style.left = '21px';
+                toggle.parentElement.style.backgroundColor = '#e2ff7f';
+            } else {
+                toggle.style.left = '1px';
+                toggle.parentElement.style.backgroundColor = '#ddd';
+            }
+            
+            // Show edit screen
+            showScreen('editActivityScreen');
+        }
+
+        // Edit activity functions
+        function selectEditActivityType(element) {
+            // Remove active class from all icons
+            document.querySelectorAll('#editActivityScreen .activity-icon').forEach(icon => {
+                icon.classList.remove('active');
+            });
+            
+            // Add active class to selected icon
+            element.classList.add('active');
+        }
+
+        function incrementEditDateTime(unit) {
+            const element = document.getElementById('edit' + unit.charAt(0).toUpperCase() + unit.slice(1));
+            let value = parseInt(element.textContent);
+            
+            switch(unit) {
+                case 'day':
+                    value = value < 31 ? value + 1 : 1;
+                    break;
+                case 'month':
+                    value = value < 12 ? value + 1 : 1;
+                    break;
+                case 'year':
+                    value = value + 1;
+                    break;
+                case 'hour':
+                    value = value < 12 ? value + 1 : 1;
+                    break;
+                case 'minute':
+                    value = value < 59 ? value + 1 : 0;
+                    break;
+            }
+            
+            element.textContent = String(value).padStart(2, '0');
+        }
+
+        function decrementEditDateTime(unit) {
+            const element = document.getElementById('edit' + unit.charAt(0).toUpperCase() + unit.slice(1));
+            let value = parseInt(element.textContent);
+            
+            switch(unit) {
+                case 'day':
+                    value = value > 1 ? value - 1 : 31;
+                    break;
+                case 'month':
+                    value = value > 1 ? value - 1 : 12;
+                    break;
+                case 'year':
+                    value = value - 1;
+                    break;
+                case 'hour':
+                    value = value > 1 ? value - 1 : 12;
+                    break;
+                case 'minute':
+                    value = value > 0 ? value - 1 : 59;
+                    break;
+            }
+            
+            element.textContent = String(value).padStart(2, '0');
+        }
+
+        function toggleEditAmPm() {
+            const element = document.getElementById('editAmpm');
+            element.textContent = element.textContent === 'am' ? 'pm' : 'am';
+        }
+
+        function toggleEditReminder() {
+            const toggle = document.getElementById('editReminderToggle');
+            const isEnabled = toggle.style.left === '21px';
+            
+            if (!isEnabled) {
+                toggle.style.left = '21px';
+                toggle.parentElement.style.backgroundColor = '#e2ff7f';
+            } else {
+                toggle.style.left = '1px';
+                toggle.parentElement.style.backgroundColor = '#ddd';
+            }
+        }
+
+        function updateActivity() {
+            if (!editingActivityId) return;
+            
+            // Find activity in array
+            const activityIndex = activities.findIndex(a => a.id === editingActivityId);
+            
+            if (activityIndex === -1) return;
+            
+            // Get selected activity type
+            let selectedType = null;
+            document.querySelectorAll('#editActivityScreen .activity-icon').forEach(icon => {
+                if (icon.classList.contains('active')) {
+                    selectedType = icon.getAttribute('data-type');
+                }
+            });
+            
+            if (!selectedType) {
+                alert('Please select an activity type');
+                return;
+            }
+            
+            // Get date and time values
+            const day = document.getElementById('editDay').textContent;
+            const month = document.getElementById('editMonth').textContent;
+            const year = document.getElementById('editYear').textContent;
+            const hour = document.getElementById('editHour').textContent;
+            const minute = document.getElementById('editMinute').textContent;
+            const ampm = document.getElementById('editAmpm').textContent;
+            
+            // Get note
+            const note = document.getElementById('editActivityNote').value;
+            
+            // Get reminder status
+            const reminderToggle = document.getElementById('editReminderToggle');
+            const reminderEnabled = reminderToggle.style.left === '21px';
+            
+            // Update activity
+            activities[activityIndex] = {
+                ...activities[activityIndex],
+                type: selectedType,
+                day: day,
+                month: month,
+                year: year,
+                hour: hour,
+                minute: minute,
+                ampm: ampm,
+                note: note,
+                reminder: reminderEnabled,
+                timestamp: new Date(`${month}/${day}/${year} ${hour}:${minute} ${ampm}`).getTime()
+            };
+            
+            // Sort activities by timestamp (newest first)
+            activities.sort((a, b) => b.timestamp - a.timestamp);
+            
+            // Reset editing ID and return to previous screen
+            editingActivityId = null;
+            cancelEdit();
+        }
+
+        function cancelEdit() {
+            // Return to previous screen (home or tracker)
+            if (previousScreen === 'homeScreen' || previousScreen === 'trackerScreen') {
+                showScreen(previousScreen);
+            } else {
+                showScreen('homeScreen');
+            }
+            
+            // Reset editing ID
+            editingActivityId = null;
+        }
+
+        // Add some sample activities for demonstration
+        function addSampleActivities() {
+            const sampleActivities = [
+                {
+                    id: 1,
+                    type: 'feeding',
+                    day: '12',
+                    month: '03',
+                    year: '2025',
+                    hour: '09',
+                    minute: '30',
+                    ampm: 'am',
+                    note: 'Formula, 4 oz',
+                    reminder: true,
+                    completed: false,
+                    timestamp: new Date('03/12/2025 09:30 am').getTime()
+                },
+                {
+                    id: 2,
+                    type: 'diaper',
+                    day: '12',
+                    month: '03',
+                    year: '2025',
+                    hour: '08',
+                    minute: '15',
+                    ampm: 'am',
+                    note: 'Wet diaper only',
+                    reminder: false,
+                    completed: false,
+                    timestamp: new Date('03/12/2025 08:15 am').getTime()
+                },
+                {
+                    id: 3,
+                    type: 'sleep',
+                    day: '11',
+                    month: '03',
+                    year: '2025',
+                    hour: '10',
+                    minute: '00',
+                    ampm: 'pm',
+                    note: 'Slept through the night!',
+                    reminder: true,
+                    completed: false,
+                    timestamp: new Date('03/11/2025 10:00 pm').getTime()
+                }
+            ];
+            
+            activities = sampleActivities;
+            renderReminders();
+        }
+
+        // Initialize with sample data
+        addSampleActivities();
+    </script>
+</body>
+</html>
