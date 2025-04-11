@@ -1103,7 +1103,6 @@
 
         // Continue as guest function
         function continueAsGuest() {
-            isGuestUser = true;
             isBabysitter = false;
             showScreen('joinCodeScreen');
         }
@@ -1358,6 +1357,7 @@
             const joinCode = document.getElementById('joinCode').value;
             
             if (joinCode) {
+                isGuestUser = true;
                 showScreen('homeScreen');
                 
                 // If user is babysitter, show reminder immediately
@@ -1623,6 +1623,7 @@
                 sleep: '💤',
                 other: '✨'
             };
+            
             
             reminderEl.innerHTML = `
                 <div class="reminder-info">
