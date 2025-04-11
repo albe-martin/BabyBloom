@@ -673,7 +673,7 @@
 
         <!-- Join Code Screen -->
         <div class="screen" id="joinCodeScreen">
-            <div class="back-arrow" onclick="showScreen('createProfileScreen')">←</div>
+            <div class="back-arrow" onclick="resetFlags(); showScreen('createProfileScreen')">←</div>
             <h1>Baby Bloom</h1>
             <input type="text" id="joinCode" placeholder="Enter Join Code">
             <button class="btn btn-secondary" id="joinButton" onclick="checkJoinCode()">Join</button>
@@ -1103,8 +1103,14 @@
 
         // Continue as guest function
         function continueAsGuest() {
+            isGuestUser = true;
             isBabysitter = false;
             showScreen('joinCodeScreen');
+        }
+
+        function resetFlags() {
+            isGuestUser = false;
+            isBabysitter = false;
         }
 
         // Function to disable guest actions
@@ -1357,7 +1363,6 @@
             const joinCode = document.getElementById('joinCode').value;
             
             if (joinCode) {
-                isGuestUser = true;
                 showScreen('homeScreen');
                 
                 // If user is babysitter, show reminder immediately
@@ -1623,7 +1628,6 @@
                 sleep: '💤',
                 other: '✨'
             };
-            
             
             reminderEl.innerHTML = `
                 <div class="reminder-info">
