@@ -74,8 +74,8 @@
         }
 
         .btn-secondary {
-            background-color: #000;
-            color: #e2ff7f;
+            background-color: #9c7fff;
+            color: white;
         }
 
         .btn-primary:hover {
@@ -83,7 +83,7 @@
         }
 
         .btn-secondary:hover {
-            background-color: #333;
+            background-color: #8a6cff;
         }
 
         input, textarea {
@@ -140,7 +140,7 @@
         }
 
         .plus-icon {
-            background-color: #fff;
+            background-color: #9c7fff;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -149,6 +149,7 @@
             justify-content: center;
             margin-top: -20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            color: white;
         }
 
         /* Reminder/Task styles */
@@ -188,21 +189,11 @@
             align-items: center;
         }
 
-        .circle-check {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid #e2ff7f;
+        .delete-btn {
+            font-size: 16px;
+            color: #ff6b6b;
             margin-left: 15px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .circle-check.completed {
-            background-color: #e2ff7f;
         }
 
         .edit-btn {
@@ -221,15 +212,21 @@
         }
 
         .activity-icon {
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background-color: #f5f5f5;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-size: 20px;
             cursor: pointer;
+        }
+
+        .activity-icon-label {
+            font-size: 12px;
+            margin-top: 5px;
         }
 
         .activity-icon.active {
@@ -400,6 +397,100 @@
             display: none;
         }
 
+        /* Delete confirmation modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .keep-btn {
+            background-color: #e2ff7f;
+            color: #000;
+        }
+
+        .delete-btn-modal {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        /* Day separator in tracker */
+        .day-separator {
+            margin: 15px 0 5px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e2ff7f;
+            font-weight: bold;
+            color: #9c7fff;
+        }
+
+        /* History button */
+        .history-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #9c7fff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Info display styles */
+        .info-display {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
         /* Baby decorative elements using CSS */
         .rattle {
             position: absolute;
@@ -449,6 +540,85 @@
         .foot-print::after {
             content: "👣";
         }
+
+        /* New styles for the new elements */
+        .share-code-btn {
+            background-color: #9c7fff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .share-code-btn:hover {
+            background-color: #8a6cff;
+        }
+        
+        .guest-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .guest-modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .snooze-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        /* --- Start Screen Only --- */
+        #startScreen {
+            align-items: center;      /* center horizontally */
+            justify-content: center;  /* center vertically if you want full page height */
+            text-align: center;       /* center text under image */
+            padding: 20px;            /* breathing room if needed */
+            min-height: 400px;
+        }
+
+        .hero-image {
+            width: 300px;       /* Adjust width as needed */
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Optional: If you want the button to stick to the bottom of the screen, use margin-top: auto on the button */
+        #startScreen button {
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
@@ -461,6 +631,7 @@
     <div class="container">
         <!-- Start Screen -->
         <div class="screen active" id="startScreen">
+            <img src="images/loginImage.png" alt="Father holding baby" class="hero-image" />
             <h1>Baby Bloom</h1>
             <p>Track everything about your baby all in one place</p>
             <button class="btn btn-primary" onclick="showScreen('createProfileScreen')">Get Started</button>
@@ -471,8 +642,8 @@
             <h2>Create Profile</h2>
             <button class="btn btn-secondary" onclick="showScreen('signUpScreen')">Create new family</button>
             <button class="btn btn-secondary" onclick="showScreen('joinCodeScreen')">Join as family</button>
-            <button class="btn btn-secondary" onclick="showScreen('joinCodeScreen')">Join as baby sitter</button>
-            <button class="btn btn-secondary" onclick="showScreen('joinCodeScreen')">Continue as guest</button>
+            <button class="btn btn-secondary" onclick="joinAsBabysitter()">Join as baby sitter</button>
+            <button class="btn btn-secondary" onclick="continueAsGuest()">Continue as guest</button>
             <span class="link-text" onclick="showScreen('loginScreen')">Log in</span>
         </div>
 
@@ -510,6 +681,7 @@
 
         <!-- Login Screen -->
         <div class="screen" id="loginScreen">
+            <div class="back-arrow" onclick="showScreen('createProfileScreen')">←</div>
             <h2>Log In</h2>
             <input type="text" id="loginUsername" placeholder="Username">
             <input type="password" id="loginPassword" placeholder="Password">
@@ -542,6 +714,7 @@
 
         <!-- Tracker Screen -->
         <div class="screen" id="trackerScreen">
+            <button class="history-btn" onclick="showHistory()">History</button>
             <h2>Tracker</h2>
             <div class="reminder-list tracker-timeline" id="trackerReminderList">
                 <div class="timeline-line"></div>
@@ -554,10 +727,26 @@
             <div class="back-arrow" onclick="showScreen('homeScreen')">←</div>
             <h2>Create Activity</h2>
             <div class="activity-icons">
-                <div class="activity-icon" data-type="diaper" onclick="selectActivityType(this)">🧷</div>
-                <div class="activity-icon" data-type="feeding" onclick="selectActivityType(this)">🍼</div>
-                <div class="activity-icon" data-type="play" onclick="selectActivityType(this)">🪀</div>
-                <div class="activity-icon" data-type="sleep" onclick="selectActivityType(this)">💤</div>
+                <div class="activity-icon" data-type="diaper" onclick="selectActivityType(this)">
+                    🧷
+                    <div class="activity-icon-label">Diaper</div>
+                </div>
+                <div class="activity-icon" data-type="feeding" onclick="selectActivityType(this)">
+                    🍼
+                    <div class="activity-icon-label">Feeding</div>
+                </div>
+                <div class="activity-icon" data-type="play" onclick="selectActivityType(this)">
+                    🪀
+                    <div class="activity-icon-label">Play</div>
+                </div>
+                <div class="activity-icon" data-type="sleep" onclick="selectActivityType(this)">
+                    💤
+                    <div class="activity-icon-label">Sleep</div>
+                </div>
+                <div class="activity-icon" data-type="other" onclick="selectActivityType(this)">
+                    ✨
+                    <div class="activity-icon-label">Other</div>
+                </div>
             </div>
             <div class="datetime-selector">
                 <div class="datetime-unit">
@@ -610,10 +799,26 @@
             <div class="back-arrow" onclick="cancelEdit()">←</div>
             <h2>Edit Activity</h2>
             <div class="activity-icons">
-                <div class="activity-icon" data-type="diaper" onclick="selectEditActivityType(this)">🧷</div>
-                <div class="activity-icon" data-type="feeding" onclick="selectEditActivityType(this)">🍼</div>
-                <div class="activity-icon" data-type="play" onclick="selectEditActivityType(this)">🪀</div>
-                <div class="activity-icon" data-type="sleep" onclick="selectEditActivityType(this)">💤</div>
+                <div class="activity-icon" data-type="diaper" onclick="selectEditActivityType(this)">
+                    🧷
+                    <div class="activity-icon-label">Diaper</div>
+                </div>
+                <div class="activity-icon" data-type="feeding" onclick="selectEditActivityType(this)">
+                    🍼
+                    <div class="activity-icon-label">Feeding</div>
+                </div>
+                <div class="activity-icon" data-type="play" onclick="selectEditActivityType(this)">
+                    🪀
+                    <div class="activity-icon-label">Play</div>
+                </div>
+                <div class="activity-icon" data-type="sleep" onclick="selectEditActivityType(this)">
+                    💤
+                    <div class="activity-icon-label">Sleep</div>
+                </div>
+                <div class="activity-icon" data-type="other" onclick="selectEditActivityType(this)">
+                    ✨
+                    <div class="activity-icon-label">Other</div>
+                </div>
             </div>
             <div class="datetime-selector">
                 <div class="datetime-unit">
@@ -690,15 +895,44 @@
                         <div class="stat-label">Average diaper changes</div>
                     </div>
                 </div>
-                <button class="btn btn-primary" style="margin-top: 20px;">Print Report</button>
+                <button class="btn btn-primary" style="margin-top: 20px;" onclick="printReport()">Print Report</button>
             </div>
         </div>
 
         <!-- Personal Info Screen -->
         <div class="screen" id="personalInfoScreen">
             <h2>Personal Information</h2>
-            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-                <p>Your personal information will appear here.</p>
+            <div style="flex-grow: 1; display: flex; flex-direction: column;">
+                <div id="babyInfoDisplay" style="width: 100%;">
+                    <div class="info-display">
+                        <div class="info-label">Baby Name</div>
+                        <div class="info-value" id="displayBabyName">Emma</div>
+                        
+                        <div class="info-label">Date of Birth</div>
+                        <div class="info-value" id="displayBabyDOB">15/03/2025</div>
+                        
+                        <div class="info-label">Height</div>
+                        <div class="info-value" id="displayBabyHeight">52 cm</div>
+                        
+                        <div class="info-label">Weight</div>
+                        <div class="info-value" id="displayBabyWeight">3.2 kg</div>
+                        
+                        <div class="info-label">Gender</div>
+                        <div class="info-value" id="displayBabyGender">Female</div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="enableEditMode()" style="width: 100%;">Edit Information</button>
+                    <button class="share-code-btn" onclick="generateShareCode()">Share Code</button>
+                </div>
+                
+                <div id="babyInfoEdit" style="width: 100%; display: none;">
+                    <input type="text" id="editBabyName" placeholder="Baby name" style="margin-bottom: 10px;">
+                    <input type="text" id="editBabyDOB" placeholder="DOB dd/mm/yyyy" style="margin-bottom: 10px;">
+                    <input type="text" id="editBabyHeight" placeholder="Height" style="margin-bottom: 10px;">
+                    <input type="text" id="editBabyWeight" placeholder="Weight" style="margin-bottom: 10px;">
+                    <input type="text" id="editBabyGender" placeholder="Gender" style="margin-bottom: 10px;">
+                    <button class="btn btn-secondary" onclick="updateBabyInfo()" style="width: 100%;">Update Information</button>
+                    <button class="btn btn-primary" onclick="cancelEditBabyInfo()" style="width: 100%; margin-top: 10px;">Cancel</button>
+                </div>
             </div>
         </div>
 
@@ -733,6 +967,62 @@
                 </div>
             </div>
         </div>
+
+        <!-- History Screen -->
+        <div class="screen" id="historyScreen">
+            <div class="back-arrow" onclick="showScreen('trackerScreen')">←</div>
+            <h2>History</h2>
+            <div class="reminder-list tracker-timeline" id="historyReminderList">
+                <div class="timeline-line"></div>
+                <!-- History items will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-title">Are you sure you want to delete this task?</div>
+            <div class="modal-buttons">
+                <button class="modal-btn keep-btn" onclick="closeDeleteModal()">Keep Task</button>
+                <button class="modal-btn delete-btn-modal" onclick="confirmDelete()">Delete Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Confirmation Modal -->
+    <div class="modal-overlay" id="printModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-title">Report printed successfully!</div>
+            <button class="modal-btn keep-btn" onclick="closePrintModal()" style="width: 100%; margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <!-- Update Confirmation Modal -->
+    <div class="modal-overlay" id="updateModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-title">Baby information updated successfully!</div>
+            <button class="modal-btn keep-btn" onclick="closeUpdateModal()" style="width: 100%; margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <!-- Guest Restriction Modal -->
+    <div class="guest-modal-overlay" id="guestModal" style="display: none;">
+        <div class="guest-modal-content">
+            <div class="modal-title">Guest users cannot add or edit activities. Please create an account or join a family.</div>
+            <button class="modal-btn keep-btn" onclick="closeGuestModal()" style="width: 100%; margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <!-- Babysitter Reminder Modal -->
+    <div class="modal-overlay" id="babysitterReminderModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-title">Feed the Baby Now</div>
+            <div class="modal-buttons">
+                <button class="snooze-btn" onclick="snoozeReminder()">Snooze</button>
+                <button class="modal-btn keep-btn" onclick="closeBabysitterReminder()">OK</button>
+            </div>
+        </div>
     </div>
 
     <!-- Taskbar (visible on screens that need it) -->
@@ -747,10 +1037,24 @@
     <script>
         // Store activities/reminders
         let activities = [];
+        let deletedActivities = [];
         let currentActivityType = null;
         let reminderEnabled = false;
         let editingActivityId = null;
         let previousScreen = null;
+        let activityToDelete = null;
+        let babyInfo = {
+            name: "Emma",
+            dob: "15/03/2025",
+            height: "52 cm",
+            weight: "3.2 kg",
+            gender: "Female"
+        };
+
+        // Track user type
+        let isGuestUser = false;
+        let isBabysitter = false;
+        let babysitterReminderTimeout = null;
 
         // Initialize date and time values
         const today = new Date();
@@ -760,6 +1064,70 @@
         document.getElementById('hour').textContent = String(today.getHours() % 12 || 12).padStart(2, '0');
         document.getElementById('minute').textContent = String(today.getMinutes()).padStart(2, '0');
         document.getElementById('ampm').textContent = today.getHours() >= 12 ? 'pm' : 'am';
+
+        // Function to generate share code
+        function generateShareCode() {
+            alert("Your share code is: r4sS0Ld");
+        }
+
+        // Guest modal functions
+        function showGuestModal() {
+            document.getElementById('guestModal').style.display = 'flex';
+        }
+
+        function closeGuestModal() {
+            document.getElementById('guestModal').style.display = 'none';
+        }
+
+        // Babysitter reminder functions
+        function showBabysitterReminder() {
+            document.getElementById('babysitterReminderModal').style.display = 'flex';
+        }
+
+        function closeBabysitterReminder() {
+            document.getElementById('babysitterReminderModal').style.display = 'none';
+        }
+
+        function snoozeReminder() {
+            closeBabysitterReminder();
+            // Show again after 5 minutes (300000 ms)
+            babysitterReminderTimeout = setTimeout(showBabysitterReminder, 300000);
+        }
+
+        // Join as babysitter function
+        function joinAsBabysitter() {
+            isBabysitter = true;
+            isGuestUser = false;
+            showScreen('joinCodeScreen');
+        }
+
+        // Continue as guest function
+        function continueAsGuest() {
+            isGuestUser = true;
+            isBabysitter = false;
+            showScreen('joinCodeScreen');
+        }
+
+        // Function to disable guest actions
+        function disableGuestActions() {
+            if (isGuestUser) {
+                // Disable the plus icon in taskbar
+                document.getElementById('addIcon').classList.add('disabled');
+                
+                // Disable edit buttons in reminders
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.classList.add('disabled');
+                });
+            } else {
+                // Enable the plus icon in taskbar
+                document.getElementById('addIcon').classList.remove('disabled');
+                
+                // Enable edit buttons in reminders
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.classList.remove('disabled');
+                });
+            }
+        }
 
         // Function to switch between screens
         function showScreen(screenId) {
@@ -777,7 +1145,6 @@
             // Show selected screen
             document.getElementById(screenId).classList.add('active');
             
-            // Show/hide taskbar
             // Show/hide taskbar based on screen
             const taskbarScreens = ['homeScreen', 'trackerScreen', 'analyticsScreen', 'personalInfoScreen', 'createActivityScreen', 'editActivityScreen'];
             if (taskbarScreens.includes(screenId)) {
@@ -806,7 +1173,150 @@
             // If we're showing the home or tracker screen, refresh the reminders
             if (screenId === 'homeScreen' || screenId === 'trackerScreen') {
                 renderReminders();
+            } else if (screenId === 'personalInfoScreen') {
+                loadBabyInfo();
             }
+            
+            // Disable guest actions if needed
+            disableGuestActions();
+        }
+
+        // Load baby info into display fields
+        function loadBabyInfo() {
+            document.getElementById('displayBabyName').textContent = babyInfo.name;
+            document.getElementById('displayBabyDOB').textContent = babyInfo.dob;
+            document.getElementById('displayBabyHeight').textContent = babyInfo.height;
+            document.getElementById('displayBabyWeight').textContent = babyInfo.weight;
+            document.getElementById('displayBabyGender').textContent = babyInfo.gender;
+            
+            // Also load into edit fields
+            document.getElementById('editBabyName').value = babyInfo.name;
+            document.getElementById('editBabyDOB').value = babyInfo.dob;
+            document.getElementById('editBabyHeight').value = babyInfo.height;
+            document.getElementById('editBabyWeight').value = babyInfo.weight;
+            document.getElementById('editBabyGender').value = babyInfo.gender;
+        }
+
+        // Enable edit mode for baby info
+        function enableEditMode() {
+            document.getElementById('babyInfoDisplay').style.display = 'none';
+            document.getElementById('babyInfoEdit').style.display = 'block';
+        }
+
+        // Cancel edit mode for baby info
+        function cancelEditBabyInfo() {
+            document.getElementById('babyInfoDisplay').style.display = 'block';
+            document.getElementById('babyInfoEdit').style.display = 'none';
+        }
+
+        // Update baby info
+        function updateBabyInfo() {
+            babyInfo = {
+                name: document.getElementById('editBabyName').value || babyInfo.name,
+                dob: document.getElementById('editBabyDOB').value || babyInfo.dob,
+                height: document.getElementById('editBabyHeight').value || babyInfo.height,
+                weight: document.getElementById('editBabyWeight').value || babyInfo.weight,
+                gender: document.getElementById('editBabyGender').value || babyInfo.gender
+            };
+            
+            // Update display fields
+            loadBabyInfo();
+            
+            // Switch back to display mode
+            document.getElementById('babyInfoDisplay').style.display = 'block';
+            document.getElementById('babyInfoEdit').style.display = 'none';
+            
+            // Show success message
+            document.getElementById('updateModal').style.display = 'flex';
+        }
+
+        // Close update confirmation modal
+        function closeUpdateModal() {
+            document.getElementById('updateModal').style.display = 'none';
+        }
+
+        // Print report function
+        function printReport() {
+            // In a real app, this would actually print the report
+            // For now, just show a success message
+            document.getElementById('printModal').style.display = 'flex';
+        }
+
+        // Close print confirmation modal
+        function closePrintModal() {
+            document.getElementById('printModal').style.display = 'none';
+        }
+
+        // Show history screen
+        function showHistory() {
+            const historyReminderList = document.getElementById('historyReminderList');
+            historyReminderList.innerHTML = '<div class="timeline-line"></div>';
+            
+            // Combine active and deleted activities
+            const allActivities = [...activities, ...deletedActivities];
+            
+            if (allActivities.length === 0) {
+                historyReminderList.innerHTML = '<div class="timeline-line"></div><p>No history yet.</p>';
+                return;
+            }
+            
+            // Sort activities by timestamp (newest first)
+            const sortedActivities = [...allActivities].sort((a, b) => b.timestamp - a.timestamp);
+            
+            // Group activities by day
+            const activitiesByDay = {};
+            sortedActivities.forEach(activity => {
+                const dateKey = `${activity.day}/${activity.month}/${activity.year}`;
+                if (!activitiesByDay[dateKey]) {
+                    activitiesByDay[dateKey] = [];
+                }
+                activitiesByDay[dateKey].push(activity);
+            });
+            
+            // Create history items grouped by day
+            for (const [date, dayActivities] of Object.entries(activitiesByDay)) {
+                // Add day separator
+                const daySeparator = document.createElement('div');
+                daySeparator.className = 'day-separator';
+                daySeparator.textContent = date;
+                historyReminderList.appendChild(daySeparator);
+                
+                // Add activities for this day
+                dayActivities.forEach(activity => {
+                    historyReminderList.appendChild(createHistoryElement(activity));
+                });
+            }
+            
+            showScreen('historyScreen');
+        }
+
+        // Create a history element for a given activity
+        function createHistoryElement(activity) {
+            const historyEl = document.createElement('div');
+            historyEl.className = 'reminder';
+            
+            // Map activity types to emojis
+            const typeEmojis = {
+                diaper: '🧷',
+                feeding: '🍼',
+                play: '🪀',
+                sleep: '💤',
+                other: '✨'
+            };
+            
+            // Check if this activity is deleted
+            const isDeleted = deletedActivities.some(a => a.id === activity.id);
+            
+            historyEl.innerHTML = `
+                <div class="reminder-info">
+                    <div class="reminder-time">${activity.month}/${activity.day}/${activity.year} ${activity.hour}:${activity.minute} ${activity.ampm}</div>
+                    <div class="reminder-title">${typeEmojis[activity.type]} ${activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}</div>
+                    <div class="reminder-note">${activity.note}</div>
+                    ${isDeleted ? '<div style="color: #ff6b6b; font-size: 12px;">(Deleted)</div>' : ''}
+                </div>
+            `;
+            
+            return historyEl;
         }
 
         // Validation functions for forms
@@ -830,6 +1340,14 @@
             const gender = document.getElementById('babyGender').value;
             
             if (name && dob && height && weight && gender) {
+                // Save baby info
+                babyInfo = {
+                    name: name,
+                    dob: dob,
+                    height: height,
+                    weight: weight,
+                    gender: gender
+                };
                 showScreen('homeScreen');
             } else {
                 alert('Please fill in all fields');
@@ -841,6 +1359,11 @@
             
             if (joinCode) {
                 showScreen('homeScreen');
+                
+                // If user is babysitter, show reminder immediately
+                if (isBabysitter) {
+                    showBabysitterReminder();
+                }
             } else {
                 alert('Please enter a join code');
             }
@@ -859,6 +1382,11 @@
 
         // Activity creation functions
         function selectActivityType(element) {
+            if (isGuestUser) {
+                showGuestModal();
+                return;
+            }
+            
             // Remove active class from all icons
             document.querySelectorAll('.activity-icon').forEach(icon => {
                 icon.classList.remove('active');
@@ -927,6 +1455,11 @@
         }
 
         function toggleReminder() {
+            if (isGuestUser) {
+                showGuestModal();
+                return;
+            }
+            
             reminderEnabled = !reminderEnabled;
             const toggle = document.getElementById('reminderToggle');
             
@@ -940,6 +1473,11 @@
         }
 
         function createActivity() {
+            if (isGuestUser) {
+                showGuestModal();
+                return;
+            }
+            
             if (!currentActivityType) {
                 alert('Please select an activity type');
                 return;
@@ -1044,10 +1582,32 @@
                 moreRemindersText.classList.add('hidden');
             }
             
-            // Create tracker screen reminders (show all)
+            // Create tracker screen reminders (grouped by day)
+            const activitiesByDay = {};
             sortedActivities.forEach(activity => {
-                trackerReminderList.appendChild(createReminderElement(activity));
+                const dateKey = `${activity.day}/${activity.month}/${activity.year}`;
+                if (!activitiesByDay[dateKey]) {
+                    activitiesByDay[dateKey] = [];
+                }
+                activitiesByDay[dateKey].push(activity);
             });
+            
+            // Add activities to tracker screen grouped by day
+            for (const [date, dayActivities] of Object.entries(activitiesByDay)) {
+                // Add day separator
+                const daySeparator = document.createElement('div');
+                daySeparator.className = 'day-separator';
+                daySeparator.textContent = date;
+                trackerReminderList.appendChild(daySeparator);
+                
+                // Add activities for this day
+                dayActivities.forEach(activity => {
+                    trackerReminderList.appendChild(createReminderElement(activity));
+                });
+            }
+            
+            // Disable guest actions if needed
+            disableGuestActions();
         }
 
         // Create a reminder element for a given activity
@@ -1060,7 +1620,8 @@
                 diaper: '🧷',
                 feeding: '🍼',
                 play: '🪀',
-                sleep: '💤'
+                sleep: '💤',
+                other: '✨'
             };
             
             reminderEl.innerHTML = `
@@ -1070,39 +1631,61 @@
                     <div class="reminder-note">${activity.note}</div>
                 </div>
                 <div class="reminder-actions">
-                    <span class="edit-btn" onclick="editActivity(${activity.id})">Edit</span>
-                    <div class="circle-check ${activity.completed ? 'completed' : ''}" data-id="${activity.id}" onclick="toggleCompleted(${activity.id})">
-                        ${activity.completed ? 'X' : ''}
-                    </div>
+                    <span class="edit-btn ${isGuestUser ? 'disabled' : ''}" onclick="${isGuestUser ? 'showGuestModal()' : 'editActivity(' + activity.id + ')'}">Edit</span>
+                    <span class="delete-btn ${isGuestUser ? 'disabled' : ''}" onclick="${isGuestUser ? 'showGuestModal()' : 'showDeleteModal(' + activity.id + ')'}">✕</span>
                 </div>
             `;
             
             return reminderEl;
         }
 
-        // Toggle completed status
-        function toggleCompleted(activityId) {
-            const activityIndex = activities.findIndex(a => a.id === activityId);
+        // Show delete confirmation modal
+        function showDeleteModal(activityId) {
+            if (isGuestUser) {
+                showGuestModal();
+                return;
+            }
+            
+            activityToDelete = activityId;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        // Close delete confirmation modal
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            activityToDelete = null;
+        }
+
+        // Confirm delete action
+        function confirmDelete() {
+            if (!activityToDelete) {
+                closeDeleteModal();
+                return;
+            }
+            
+            // Find activity in array
+            const activityIndex = activities.findIndex(a => a.id === activityToDelete);
             
             if (activityIndex !== -1) {
-                const activity = activities[activityIndex];
-                activity.completed = !activity.completed;
+                // Move to deleted activities
+                deletedActivities.push(activities[activityIndex]);
+                // Remove from active activities
+                activities.splice(activityIndex, 1);
                 
-                // If completed, set X mark, otherwise remove it
-                if (activity.completed) {
-                    // If completed, after a delay, remove the activity
-                    setTimeout(() => {
-                        activities = activities.filter(a => a.id !== activityId);
-                        renderReminders();
-                    }, 1000);
-                }
-                
+                // Refresh display
                 renderReminders();
             }
+            
+            closeDeleteModal();
         }
 
         // Edit activity
         function editActivity(activityId) {
+            if (isGuestUser) {
+                showGuestModal();
+                return;
+            }
+            
             const activity = activities.find(a => a.id === activityId);
             
             if (!activity) return;
@@ -1143,6 +1726,11 @@
 
         // Edit activity functions
         function selectEditActivityType(element) {
+            if (isGuestUser) {
+                showGuestModal();
+                return;
+            }
+            
             // Remove active class from all icons
             document.querySelectorAll('#editActivityScreen .activity-icon').forEach(icon => {
                 icon.classList.remove('active');
@@ -1208,6 +1796,11 @@
         }
 
         function toggleEditReminder() {
+            if (isGuestUser) {
+                showGuestModal();
+                return;
+            }
+            
             const toggle = document.getElementById('editReminderToggle');
             const isEnabled = toggle.style.left === '21px';
             
@@ -1335,6 +1928,20 @@
                     reminder: true,
                     completed: false,
                     timestamp: new Date('03/11/2025 10:00 pm').getTime()
+                },
+                {
+                    id: 4,
+                    type: 'other',
+                    day: '10',
+                    month: '03',
+                    year: '2025',
+                    hour: '02',
+                    minute: '30',
+                    ampm: 'pm',
+                    note: 'Doctor appointment',
+                    reminder: true,
+                    completed: false,
+                    timestamp: new Date('03/10/2025 02:30 pm').getTime()
                 }
             ];
             
