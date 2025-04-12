@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baby Bloom</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="baby_bloom_style.css" />
+</head>
+<body>
+  <!-- Baby-themed decorative elements -->
+  <div class="rattle" style="top: 10%; right: 10%;"></div>
+  <div class="bottle" style="bottom: 15%; left: 8%;"></div>
+  <div class="foot-print" style="top: 20%; left: 15%;"></div>
+  <div class="foot-print" style="bottom: 25%; right: 12%;"></div>
+
+  <div class="container">
+    <!-- Start Screen -->
+    <div class="screen active" id="startScreen">
+      <img src="images/loginImage.png" alt="Father holding baby" class="hero-image" />
+      <h1>Baby Bloom</h1>
+      <p>Track everything about your baby all in one place</p>
+      <button class="btn btn-primary" onclick="showScreen('createProfileScreen')">Get Started</button>
+    </div>
+
+    <!-- Create Profile Screen -->
+    <div class="screen" id="createProfileScreen">
+      <h2>Create Profile</h2>
+      <button class="btn btn-secondary" onclick="showScreen('signUpScreen')">Create new family</button>
+      <button class="btn btn-secondary" onclick="showScreen('joinCodeScreen')">Join as family</button>
+      <button class="btn btn-secondary" onclick="joinAsBabysitter()">Join as baby sitter</button>
+      <button class="btn btn-secondary" onclick="continueAsGuest()">Continue as guest</button>
+      <span class="link-text" onclick="showScreen('loginScreen')">Log in</span>
+    </div>
+
+    <!-- Sign Up Screen -->
+    <div class="screen" id="signUpScreen">
+      <div class="back-arrow" onclick="showScreen('createProfileScreen')">←</div>
+      <h2>Sign Up</h2>
+      <input type="text" id="signupUsername" placeholder="Username" />
+      <input type="password" id="signupPassword" placeholder="Password" />
+      <input type="password" id="confirmPassword" placeholder="Confirm password" />
+      <button class="btn btn-secondary" id="signupButton" onclick="checkSignupFields()">Sign Up</button>
+      <span class="link-text" onclick="showScreen('loginScreen')">Log in</span>
+    </div>
+
+    <!-- Baby Info Screen -->
+    <div class="screen" id="babyScreen">
+      <div class="back-arrow" onclick="showScreen('signUpScreen')">←</div>
+      <h2>Baby</h2>
+      <div style="font-size: 48px; margin: 10px 0;">👶</div>
+      <input type="text" id="babyName" placeholder="Baby name" />
+      <input type="text" id="babyDOB" placeholder="DOB dd/mm/yyyy" />
+      <input type="text" id="babyHeight" placeholder="Height" />
+      <input type="text" id="babyWeight" placeholder="Weight" />
+      <input type="text" id="babyGender" placeholder="Gender" />
+      <button class="btn btn-secondary" id="startButton" onclick="checkBabyFields()">Start</button>
+    </div>
+
+    <!-- Join Code Screen -->
+    <div class="screen" id="joinCodeScreen">
+      <div class="back-arrow" onclick="resetFlags(); showScreen('createProfileScreen')">←</div>
+      <h1>Baby Bloom</h1>
+      <input type="text" id="joinCode" placeholder="Enter Join Code" />
+      <button class="btn btn-secondary" id="joinButton" onclick="checkJoinCode()">Join</button>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="screen" id="loginScreen">
+      <div class="back-arrow" onclick="showScreen('createProfileScreen')">←</div>
+      <h2>Log In</h2>
+      <input type="text" id="loginUsername" placeholder="Username" />
+      <input type="password" id="loginPassword" placeholder="Password" />
+      <button class="btn btn-secondary" id="loginButton" onclick="checkLoginFields()">Log In</button>
+      <div>
+        <span class="link-text" onclick="showScreen('createProfileScreen')">Forgot password</span>
+        <span style="margin: 0 10px;">|</span>
+        <span class="link-text" onclick="showScreen('signUpScreen')">Sign up</span>
+      </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div class="screen" id="homeScreen">
+      <div class="content-area">
+        <div>
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+            <div style="display: flex; align-items: center; cursor: pointer;" onclick="showScreen('tipsScreen')">
+              <span style="font-size: 20px; margin-right: 5px;">👶</span>
+              <span>Tips</span>
+            </div>
+          </div>
+          <h2>Upcoming</h2>
+          <div class="reminder-list" id="homeReminderList">
+            <!-- Reminders will be dynamically added here -->
+          </div>
+          <p id="moreRemindersText" class="hidden">More reminders pending</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tracker Screen -->
+    <div class="screen" id="trackerScreen">
+      <button class="history-btn" onclick="showHistory()">History</button>
+      <h2>Tracker</h2>
+      <div class="reminder-list tracker-timeline" id="trackerReminderList">
+        <div class="timeline-line"></div>
+        <!-- Reminders will be dynamically added here -->
+      </div>
+    </div>
+
+    <!-- Create Activity Screen -->
+    <div class="screen" id="createActivityScreen">
+      <div class="back-arrow" onclick="showScreen('homeScreen')">←</div>
+      <h2>Create Activity</h2>
+      <div class="activity-icons">
+        <div class="activity-icon" data-type="diaper" onclick="selectActivityType(this)">
+          🧷
+          <div class="activity-icon-label">Diaper</div>
+        </div>
+        <div class="activity-icon" data-type="feeding" onclick="selectActivityType(this)">
+          🍼
+          <div class="activity-icon-label">Feeding</div>
+        </div>
+        <div class="activity-icon" data-type="play" onclick="selectActivityType(this)">
+          🪀
+          <div class="activity-icon-label">Play</div>
+        </div>
+        <div class="activity-icon" data-type="sleep" onclick="selectActivityType(this)">
+          💤
+          <div class="activity-icon-label">Sleep</div>
+        </div>
+        <div class="activity-icon" data-type="other" onclick="selectActivityType(this)">
+          ✨
+          <div class="activity-icon-label">Other</div>
+        </div>
+      </div>
+      <div class="datetime-selector">
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementDateTime('day')">▲</div>
+          <span class="datetime-value" id="day">01</span>
+          <div class="datetime-arrow" onclick="decrementDateTime('day')">▼</div>
+        </div>
+        <span>/</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementDateTime('month')">▲</div>
+          <span class="datetime-value" id="month">01</span>
+          <div class="datetime-arrow" onclick="decrementDateTime('month')">▼</div>
+        </div>
+        <span>/</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementDateTime('year')">▲</div>
+          <span class="datetime-value" id="year">2025</span>
+          <div class="datetime-arrow" onclick="decrementDateTime('year')">▼</div>
+        </div>
+        <span>|</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementDateTime('hour')">▲</div>
+          <span class="datetime-value" id="hour">12</span>
+          <div class="datetime-arrow" onclick="decrementDateTime('hour')">▼</div>
+        </div>
+        <span>:</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementDateTime('minute')">▲</div>
+          <span class="datetime-value" id="minute">00</span>
+          <div class="datetime-arrow" onclick="decrementDateTime('minute')">▼</div>
+        </div>
+        <div class="datetime-unit" style="margin-left: 5px;">
+          <div class="datetime-arrow" onclick="toggleAmPm()">▲</div>
+          <span class="datetime-value" id="ampm">am</span>
+          <div class="datetime-arrow" onclick="toggleAmPm()">▼</div>
+        </div>
+      </div>
+      <textarea id="activityNote" placeholder="Add note"></textarea>
+      <div style="display: flex; align-items: center; margin: 15px 0;">
+        <span style="margin-right: 10px;">Set Reminder</span>
+        <div style="width: 40px; height: 20px; background-color: #ddd; border-radius: 10px; position: relative; cursor: pointer;" onclick="toggleReminder()">
+          <div id="reminderToggle" style="width: 18px; height: 18px; background-color: white; border-radius: 50%; position: absolute; top: 1px; left: 1px; transition: all 0.3s ease;"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="createActivity()">Create Activity</button>
+    </div>
+
+    <!-- Edit Activity Screen -->
+    <div class="screen" id="editActivityScreen">
+      <div class="back-arrow" onclick="cancelEdit()">←</div>
+      <h2>Edit Activity</h2>
+      <div class="activity-icons">
+        <div class="activity-icon" data-type="diaper" onclick="selectEditActivityType(this)">
+          🧷
+          <div class="activity-icon-label">Diaper</div>
+        </div>
+        <div class="activity-icon" data-type="feeding" onclick="selectEditActivityType(this)">
+          🍼
+          <div class="activity-icon-label">Feeding</div>
+        </div>
+        <div class="activity-icon" data-type="play" onclick="selectEditActivityType(this)">
+          🪀
+          <div class="activity-icon-label">Play</div>
+        </div>
+        <div class="activity-icon" data-type="sleep" onclick="selectEditActivityType(this)">
+          💤
+          <div class="activity-icon-label">Sleep</div>
+        </div>
+        <div class="activity-icon" data-type="other" onclick="selectEditActivityType(this)">
+          ✨
+          <div class="activity-icon-label">Other</div>
+        </div>
+      </div>
+      <div class="datetime-selector">
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementEditDateTime('day')">▲</div>
+          <span class="datetime-value" id="editDay">01</span>
+          <div class="datetime-arrow" onclick="decrementEditDateTime('day')">▼</div>
+        </div>
+        <span>/</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementEditDateTime('month')">▲</div>
+          <span class="datetime-value" id="editMonth">01</span>
+          <div class="datetime-arrow" onclick="decrementEditDateTime('month')">▼</div>
+        </div>
+        <span>/</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementEditDateTime('year')">▲</div>
+          <span class="datetime-value" id="editYear">2025</span>
+          <div class="datetime-arrow" onclick="decrementEditDateTime('year')">▼</div>
+        </div>
+        <span>|</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementEditDateTime('hour')">▲</div>
+          <span class="datetime-value" id="editHour">12</span>
+          <div class="datetime-arrow" onclick="decrementEditDateTime('hour')">▼</div>
+        </div>
+        <span>:</span>
+        <div class="datetime-unit">
+          <div class="datetime-arrow" onclick="incrementEditDateTime('minute')">▲</div>
+          <span class="datetime-value" id="editMinute">00</span>
+          <div class="datetime-arrow" onclick="decrementEditDateTime('minute')">▼</div>
+        </div>
+        <div class="datetime-unit" style="margin-left: 5px;">
+          <div class="datetime-arrow" onclick="toggleEditAmPm()">▲</div>
+          <span class="datetime-value" id="editAmpm">am</span>
+          <div class="datetime-arrow" onclick="toggleEditAmPm()">▼</div>
+        </div>
+      </div>
+      <textarea id="editActivityNote" placeholder="Add note"></textarea>
+      <div style="display: flex; align-items: center; margin: 15px 0;">
+        <span style="margin-right: 10px;">Set Reminder</span>
+        <div style="width: 40px; height: 20px; background-color: #ddd; border-radius: 10px; position: relative; cursor: pointer;" onclick="toggleEditReminder()">
+          <div id="editReminderToggle" style="width: 18px; height: 18px; background-color: white; border-radius: 50%; position: absolute; top: 1px; left: 1px; transition: all 0.3s ease;"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="updateActivity()">Update Activity</button>
+    </div>
+
+    <!-- Analytics Screen -->
+    <div class="screen" id="analyticsScreen">
+      <h2>Analytics</h2>
+      <div class="analytics-container">
+        <div class="pie-chart-container"></div>
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #FFB6C1;"></div>
+            <span>Hours slept</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #ADD8E6;"></div>
+            <span># of feedings</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #90EE90;"></div>
+            <span># of diaper changes</span>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-value">14 h</div>
+            <div class="stat-label">Average hours of sleep</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Average diaper changes</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top: 20px;" onclick="printReport()">Print Report</button>
+      </div>
+    </div>
+
+    <!-- Personal Info Screen -->
+    <div class="screen" id="personalInfoScreen">
+      <h2>Personal Information</h2>
+      <div style="flex-grow: 1; display: flex; flex-direction: column;">
+        <div id="babyInfoDisplay" style="width: 100%;">
+          <div class="info-display">
+            <div class="info-label">Baby Name</div>
+            <div class="info-value" id="displayBabyName">Emma</div>
+
+            <div class="info-label">Date of Birth</div>
+            <div class="info-value" id="displayBabyDOB">15/03/2025</div>
+
+            <div class="info-label">Height</div>
+            <div class="info-value" id="displayBabyHeight">52 cm</div>
+
+            <div class="info-label">Weight</div>
+            <div class="info-value" id="displayBabyWeight">3.2 kg</div>
+
+            <div class="info-label">Gender</div>
+            <div class="info-value" id="displayBabyGender">Female</div>
+          </div>
+          <button class="btn btn-secondary" onclick="enableEditMode()" style="width: 100%;">Edit Information</button>
+          <button class="share-code-btn" onclick="generateShareCode()">Share Code</button>
+        </div>
+
+        <div id="babyInfoEdit" style="width: 100%; display: none;">
+          <input type="text" id="editBabyName" placeholder="Baby name" style="margin-bottom: 10px;" />
+          <input type="text" id="editBabyDOB" placeholder="DOB dd/mm/yyyy" style="margin-bottom: 10px;" />
+          <input type="text" id="editBabyHeight" placeholder="Height" style="margin-bottom: 10px;" />
+          <input type="text" id="editBabyWeight" placeholder="Weight" style="margin-bottom: 10px;" />
+          <input type="text" id="editBabyGender" placeholder="Gender" style="margin-bottom: 10px;" />
+          <button class="btn btn-secondary" onclick="updateBabyInfo()" style="width: 100%;">Update Information</button>
+          <button class="btn btn-primary" onclick="cancelEditBabyInfo()" style="width: 100%; margin-top: 10px;">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips Screen -->
+    <div class="screen" id="tipsScreen">
+      <div class="back-arrow" onclick="showScreen('homeScreen')">←</div>
+      <h2>Baby Tips</h2>
+      <div class="reminder-list">
+        <div class="reminder">
+          <div class="reminder-info">
+            <div class="reminder-title">Sleep Schedule</div>
+            <div class="reminder-note">Newborns sleep 14-17 hours a day in short periods of 2-4 hours.</div>
+          </div>
+        </div>
+        <div class="reminder">
+          <div class="reminder-info">
+            <div class="reminder-title">Feeding</div>
+            <div class="reminder-note">Newborns typically eat every 2-3 hours, or 8-12 times in 24 hours.</div>
+          </div>
+        </div>
+        <div class="reminder">
+          <div class="reminder-info">
+            <div class="reminder-title">Diaper Changes</div>
+            <div class="reminder-note">Expect 6-8 wet diapers and 2-5 bowel movements per day for newborns.</div>
+          </div>
+        </div>
+        <div class="reminder">
+          <div class="reminder-info">
+            <div class="reminder-title">Bath Time</div>
+            <div class="reminder-note">Until the umbilical cord falls off, give sponge baths only. After that, 2-3 baths per week is plenty.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Screen -->
+    <div class="screen" id="historyScreen">
+      <div class="back-arrow" onclick="showScreen('trackerScreen')">←</div>
+      <h2>History</h2>
+      <div class="reminder-list tracker-timeline" id="historyReminderList">
+        <div class="timeline-line"></div>
+        <!-- History items will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" id="deleteModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-title">Are you sure you want to delete this task?</div>
+      <div class="modal-buttons">
+        <button class="modal-btn keep-btn" onclick="closeDeleteModal()">Keep Task</button>
+        <button class="modal-btn delete-btn-modal" onclick="confirmDelete()">Delete Task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Print Confirmation Modal -->
+  <div class="modal-overlay" id="printModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-title">Report printed successfully!</div>
+      <button class="modal-btn keep-btn" onclick="closePrintModal()" style="width: 100%; margin-top: 20px;">OK</button>
+    </div>
+  </div>
+
+  <!-- Update Confirmation Modal -->
+  <div class="modal-overlay" id="updateModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-title">Baby information updated successfully!</div>
+      <button class="modal-btn keep-btn" onclick="closeUpdateModal()" style="width: 100%; margin-top: 20px;">OK</button>
+    </div>
+  </div>
+
+  <!-- Guest Restriction Modal -->
+  <div class="guest-modal-overlay" id="guestModal" style="display: none;">
+    <div class="guest-modal-content">
+      <div class="modal-title">Guest users cannot add or edit activities. Please create an account or join a family.</div>
+      <button class="modal-btn keep-btn" onclick="closeGuestModal()" style="width: 100%; margin-top: 20px;">OK</button>
+    </div>
+  </div>
+
+  <!-- Babysitter Reminder Modal -->
+  <div class="modal-overlay" id="babysitterReminderModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-title">Feed the Baby Now</div>
+      <div class="modal-buttons">
+        <button class="snooze-btn" onclick="snoozeReminder()">Snooze</button>
+        <button class="modal-btn keep-btn" onclick="closeBabysitterReminder()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taskbar (visible on screens that need it) -->
+  <div class="taskbar" id="mainTaskbar" style="display: none;">
+    <div class="taskbar-icon" id="homeIcon" onclick="showScreen('homeScreen')">🏠</div>
+    <div class="taskbar-icon" id="trackerIcon" onclick="showScreen('trackerScreen')">📋</div>
+    <div class="taskbar-icon plus-icon" id="addIcon" onclick="showScreen('createActivityScreen')">+</div>
+    <div class="taskbar-icon" id="analyticsIcon" onclick="showScreen('analyticsScreen')">📊</div>
+    <div class="taskbar-icon" id="profileIcon" onclick="showScreen('personalInfoScreen')">👤</div>
+  </div>
+
+  <!-- Link to external JavaScript file -->
+  <script src="baby_bloom_script.js"></script>
+</body>
+</html>

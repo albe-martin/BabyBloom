@@ -1,0 +1,627 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e2ff7f 0%, #c9f76f 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+}
+
+.btn-primary {
+  background-color: #e2ff7f;
+  color: #000;
+}
+
+.btn-secondary {
+  background-color: #9c7fff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #d1f269;
+}
+
+.btn-secondary:hover {
+  background-color: #8a6cff;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.link-text {
+  color: #666;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+}
+
+/* Taskbar styles */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e2ff7f;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  z-index: 100;
+}
+
+.taskbar-icon {
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.taskbar-icon.active {
+  color: #000;
+  transform: scale(1.2);
+}
+
+.plus-icon {
+  background-color: #9c7fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  color: white;
+}
+
+/* Reminder/Task styles */
+.reminder {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.reminder.completed {
+  background-color: #f5f5f5;
+  opacity: 0.8;
+}
+
+.reminder-info {
+  flex-grow: 1;
+}
+
+.reminder-time {
+  font-size: 12px;
+  color: #888;
+}
+
+.reminder-title {
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.reminder-note {
+  font-size: 14px;
+  color: #666;
+}
+
+.reminder-actions {
+  display: flex;
+  align-items: center;
+}
+
+.delete-btn {
+  font-size: 16px;
+  color: #ff6b6b;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  font-size: 12px;
+  color: #888;
+  margin-right: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Activity completion checkbox */
+.reminder-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Activity creation styles */
+.activity-icons {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.activity-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.activity-icon-label {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.activity-icon.active {
+  background-color: #e2ff7f;
+  transform: scale(1.1);
+}
+
+.datetime-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.datetime-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 2px;
+}
+
+.datetime-value {
+  margin: 0 5px;
+}
+
+.datetime-arrow {
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+}
+
+.reminder-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 20px;
+  flex-grow: 1;
+}
+
+.tracker-timeline {
+  position: relative;
+  padding-left: 15px;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background-color: #e2ff7f;
+}
+
+.baby-element {
+  font-size: 28px;
+  margin: 10px;
+  opacity: 0.7;
+  position: absolute;
+}
+
+.baby-element:nth-child(1) {
+  top: 10%;
+  right: 15%;
+  transform: rotate(15deg);
+}
+
+.baby-element:nth-child(2) {
+  bottom: 20%;
+  left: 10%;
+  transform: rotate(-10deg);
+}
+
+.baby-element:nth-child(3) {
+  top: 30%;
+  left: 20%;
+  transform: rotate(5deg);
+}
+
+/* Analytics styles */
+.analytics-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.pie-chart-container {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  background: conic-gradient(
+    #FFB6C1 0% 50%, /* Sleep - pink */
+    #ADD8E6 50% 75%, /* Feeding - light blue */
+    #90EE90 75% 100% /* Diaper - light green */
+  );
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.stat-box {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  width: 48%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #777;
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Delete confirmation modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.keep-btn {
+  background-color: #e2ff7f;
+  color: #000;
+}
+
+.delete-btn-modal {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+/* Day separator in tracker */
+.day-separator {
+  margin: 15px 0 5px 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #e2ff7f;
+  font-weight: bold;
+  color: #9c7fff;
+}
+
+/* History button */
+.history-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #9c7fff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Info display styles */
+.info-display {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.info-label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.info-value {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Baby decorative elements using CSS */
+.rattle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(226, 255, 127, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+}
+
+.rattle::before {
+  content: "🎯";
+  opacity: 0.8;
+}
+
+.bottle {
+  position: absolute;
+  width: 20px;
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px 5px 10px 10px;
+  border: 2px solid rgba(226, 255, 127, 0.8);
+}
+
+.bottle::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: rgba(226, 255, 127, 0.8);
+  border-radius: 50%;
+}
+
+.foot-print {
+  position: absolute;
+  font-size: 24px;
+  color: rgba(226, 255, 127, 0.7);
+  transform: rotate(45deg);
+}
+
+.foot-print::after {
+  content: "👣";
+}
+
+/* New styles for the new elements */
+.share-code-btn {
+  background-color: #9c7fff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.share-code-btn:hover {
+  background-color: #8a6cff;
+}
+
+.guest-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.guest-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.snooze-btn {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* --- Start Screen Only --- */
+#startScreen {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  min-height: 400px;
+}
+
+.hero-image {
+  width: 300px;
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+#startScreen button {
+  margin-top: auto;
+}
