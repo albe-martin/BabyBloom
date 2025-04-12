@@ -117,11 +117,11 @@ Follow these steps exactly as described:
 ### 5. Entering Baby Information
 
 - **On the Baby Info Screen:** Provide the following:
-  - **Baby Name:** Type `Emma`.
-  - **Date of Birth:** In the format `dd/mm/yyyy`, type `15/03/2025`.
-  - **Height:** Type `52 cm`.
-  - **Weight:** Type `3.2 kg`.
-  - **Gender:** Type `Female`.
+  - **Baby Name:**
+  - **Date of Birth:**
+  - **Height:**
+  - **Weight:**
+  - **Gender:**
 - **Action:**  
   - **Click “Start”.**
 - **Result:** You proceed to the Home Screen.
@@ -152,12 +152,12 @@ Follow these steps exactly as described:
 
 - **On Screen:** Controls allow you to set day, month, year, hour, minute, and AM/PM.
 - **Action:**  
-  - Adjust the **Day:** Click the arrow until you see `12`.
-  - Adjust the **Month:** Click until you see `03`.
-  - Adjust the **Year:** Click until you see `2025`.
-  - Adjust the **Hour:** Set to `09`.
-  - Adjust the **Minute:** Set to `30`.
-  - Ensure the **AM/PM toggle** shows `am`. (Click to change if necessary.)
+  - Adjust the **Day:**
+  - Adjust the **Month:**
+  - Adjust the **Year:**
+  - Adjust the **Hour:**
+  - Adjust the **Minute:**
+  - Ensure the **AM/PM toggle**
 - **Result:** Your desired date and time are set.
 
 #### d) Entering the Activity Note
